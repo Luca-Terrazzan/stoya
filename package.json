@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "man": "./man/doc.1",
-  "dependencies": {},
+  "dependencies": {
+    "@oclif/command": "^1.5.19"
+  },
   "devDependencies": {
     "@types/node": "^12.12.7"
   }
