@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { description, name, version } from './package.json';
 
 const options = process.argv.slice(2)
