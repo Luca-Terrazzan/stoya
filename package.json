@@ -10,5 +10,8 @@
   "author": "",
   "license": "ISC",
   "man": "./man/doc.1",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^12.12.7"
+  }
 }
