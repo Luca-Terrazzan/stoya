@@ -1,3 +1,4 @@
+"use strict";
 {
     "name": "stoya",
     "version": "1.0.0",
@@ -11,7 +12,7 @@
     "license": "ISC",
     "man": "./man/doc.1",
     "dependencies": {
-        "typescript": "^3.7.2"
+        "@oclif/command": "^1.5.19"
     },
     "devDependencies": {
         "@types/node": "^12.12.7"

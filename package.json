@@ -1,9 +1,9 @@
 {
-  "name": "ts-cli-test",
+  "name": "stoya",
   "version": "1.0.0",
   "description": "Typescript CLI test, following this: https://cli-in-ts.dev/",
-  "main": "test.js",
-  "bin": "test.js",
+  "main": "./build/stoya.js",
+  "bin": "./build/stoya.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +11,8 @@
   "license": "ISC",
   "man": "./man/doc.1",
   "dependencies": {
-    "@oclif/command": "^1.5.19"
+    "commander": "^4.0.1",
+    "typescript": "^3.7.2"
   },
   "devDependencies": {
     "@types/node": "^12.12.7"
