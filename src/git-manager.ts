@@ -53,6 +53,8 @@ export class GitManager {
     await this.git.checkoutBranch(releaseBranch, masterBranch);
 
     await this.git.mergeFromTo(devBranch, releaseBranch);
+
+    // await this.git.push();
   }
 
 }

@@ -32,11 +32,8 @@ async function main() {
   // Execute script
   console.log('\nStarting the creation of release branches 🙋‍♂️');
 
-  const gitmngr = new GitManager('/Users/luca.terrazzan/Documents/workspace/docebo/wand/aamon');
-  const status = await gitmngr.getStatus();
-
-  const localBranch = await gitmngr.checkoutReleaseBranchLocally('test');
-  console.log(localBranch);
+  const gitMngr = new GitManager('/Users/luca.terrazzan/Documents/workspace/docebo/wand/aamon');
+  gitMngr.createRelease('maintenance/weekly-70', 'la/reports/release/release-test', 'la/reports/develop');
 
   process.exit(0);
 }
