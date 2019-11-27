@@ -1,17 +1,19 @@
 {
   "name": "stoya",
   "version": "1.0.0",
-  "description": "Typescript CLI test, following this: https://cli-in-ts.dev/",
+  "description": "Creates release branches",
   "main": "./build/stoya.js",
   "bin": "./build/stoya.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",
   "man": "./man/doc.1",
   "dependencies": {
     "commander": "^4.0.1",
+    "simple-git": "^1.126.0",
     "typescript": "^3.7.2"
   },
   "devDependencies": {
