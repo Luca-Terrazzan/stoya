@@ -12,6 +12,7 @@
   "license": "ISC",
   "man": "./man/doc.1",
   "dependencies": {
+    "colors": "^1.4.0",
     "commander": "^4.0.1",
     "simple-git": "^1.126.0",
     "typescript": "^3.7.2"

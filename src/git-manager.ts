@@ -1,5 +1,5 @@
 import simplegit, { SimpleGit } from "simple-git/promise";
-// import simplegit = require("simple-git/promise");
+import 'colors';
 
 export class GitManager {
 
@@ -13,7 +13,7 @@ export class GitManager {
 
   public async init() {
     if (!this.git.checkIsRepo()) {
-      console.error(`Folder ${this.folder} is not a git repo!`);
+      console.error(`Folder ${this.folder} is not a git repo!`.red);
       throw new Error(`Folder ${this.folder} is not a git repo!`);
     }
 
@@ -36,7 +36,7 @@ export class GitManager {
     try{
       this.git.reset('hard');
     } catch (e) {
-      console.error(`Cannot reset repo ${this.repo} to current branch ${this.getCurrentBranch()}`);
+      console.error(`🐛 Cannot reset repo ${this.repo} to current branch ${this.getCurrentBranch()} 🐛`.red);
       throw e;
     }
   }
@@ -45,7 +45,7 @@ export class GitManager {
     try {
       await this.git.checkoutBranch(releaseBranch, masterBranch);
     } catch (e) {
-      console.error(`Release branch already existing for repo ${this.repo}, resetting it back to ${masterBranch}.`);
+      console.error(`⚠  Release branch already existing for repo ${this.repo}, resetting it back to ${masterBranch} ⚠`.yellow);
 
       await this.git.checkout(releaseBranch);
       await this.git.reset(['--hard', `${masterBranch}`]);
@@ -66,6 +66,8 @@ export class GitManager {
     await this.git.mergeFromTo(devBranch, releaseBranch);
 
     // await this.git.push();
+
+    console.log(`🎉  Release completed for repo ${this.folder} 🎉`.green.bold);
   }
 
 }

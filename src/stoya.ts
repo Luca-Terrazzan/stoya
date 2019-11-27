@@ -3,6 +3,7 @@
 import { description, name, version } from '../package.json';
 import { GitManager } from './git-manager';
 import { repositories } from "../repositories.json";
+import "colors";
 
 async function main() {
 
@@ -31,14 +32,17 @@ async function main() {
   }
 
   // Execute script
-  console.log('\nStarting the creation of release branches 🙋‍♂️');
+  console.log('\nStarting the creation of release branches 🙋‍♂️\n'.underline.bold);
 
   for (const repo of repositories) {
-    console.log(`Creating release for repository ${repo}`);
+    console.log(`👏  Creating release for repository ${repo}`.green);
 
     const gitMngr = new GitManager(repo);
     await gitMngr.init();
-    gitMngr.createRelease('maintenance/weekly-70', 'la/reports/release/release-test', 'la/reports/develop');
+
+    gitMngr.createRelease('maintenance/weekly-70', 'la/reports/release/release-test', 'la/reports/develop').catch((err) => {
+      console.error(`🐛  An error occurred while trying to create a release for repo ${repo}!`.red);
+    });
   }
 
 }
