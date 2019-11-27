@@ -1,0 +1,9 @@
+{
+  "repositories": [
+    "~/Documents/workspace/docebo/wand/aamon",
+    "~/Documents/workspace/docebo/wand/hydra/backend",
+    "~/Documents/workspace/docebo/wand/hydra/backend/apps/report",
+    "~/Documents/workspace/docebo/wand/heracles/projects/hydra/core",
+    "~/Documents/workspace/docebo/wand/heracles/projects/hydra/report"
+  ]
+}

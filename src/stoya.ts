@@ -2,6 +2,7 @@
 
 import { description, name, version } from '../package.json';
 import { GitManager } from './git-manager';
+import { repositories } from "../repositories.json";
 
 async function main() {
 
@@ -32,11 +33,14 @@ async function main() {
   // Execute script
   console.log('\nStarting the creation of release branches 🙋‍♂️');
 
-  const gitMngr = new GitManager('/Users/luca.terrazzan/Documents/workspace/docebo/wand/aamon');
-  await gitMngr.init();
-  gitMngr.createRelease('maintenance/weekly-70', 'la/reports/release/release-test', 'la/reports/develop');
+  for (const repo of repositories) {
+    console.log(`Creating release for repository ${repo}`);
 
-  // process.exit(0);
+    const gitMngr = new GitManager(repo);
+    await gitMngr.init();
+    gitMngr.createRelease('maintenance/weekly-70', 'la/reports/release/release-test', 'la/reports/develop');
+  }
+
 }
 
 main();
