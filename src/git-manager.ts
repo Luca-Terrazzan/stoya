@@ -32,7 +32,7 @@ export class GitManager {
     return await this.git.checkoutLocalBranch(branch);
   }
 
-  public async hardReset() {
+  private async hardReset() {
     try{
       this.git.reset('hard');
     } catch (e) {
@@ -41,16 +41,27 @@ export class GitManager {
     }
   }
 
+  private async createReleaseBranch(releaseBranch: string, masterBranch: string) {
+    try {
+      await this.git.checkoutBranch(releaseBranch, masterBranch);
+    } catch (e) {
+      console.error(`Release branch already existing for repo ${this.repo}, resetting it back to ${masterBranch}.`);
+
+      await this.git.checkout(releaseBranch);
+      await this.git.reset(['--hard', `${masterBranch}`]);
+    }
+  }
+
   public async createRelease(masterBranch: string, releaseBranch: string, devBranch: string) {
     await this.hardReset();
 
-    await this.git.checkoutLocalBranch(devBranch);
+    await this.git.checkout(devBranch);
     await this.git.pull();
 
-    await this.git.checkoutLocalBranch(masterBranch);
+    await this.git.checkout(masterBranch);
     await this.git.pull();
 
-    await this.git.checkoutBranch(releaseBranch, masterBranch);
+    await this.createReleaseBranch(releaseBranch, masterBranch);
 
     await this.git.mergeFromTo(devBranch, releaseBranch);
 

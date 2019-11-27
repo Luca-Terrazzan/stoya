@@ -33,9 +33,10 @@ async function main() {
   console.log('\nStarting the creation of release branches 🙋‍♂️');
 
   const gitMngr = new GitManager('/Users/luca.terrazzan/Documents/workspace/docebo/wand/aamon');
+  await gitMngr.init();
   gitMngr.createRelease('maintenance/weekly-70', 'la/reports/release/release-test', 'la/reports/develop');
 
-  process.exit(0);
+  // process.exit(0);
 }
 
 main();
