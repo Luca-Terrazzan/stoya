@@ -36,9 +36,23 @@ export class GitManager {
     try{
       this.git.reset('hard');
     } catch (e) {
-      console.error(`In repo ${}`);
-
+      console.error(`Cannot reset repo ${this.repo} to current branch ${this.getCurrentBranch()}`);
+      throw e;
     }
+  }
+
+  public async createRelease(masterBranch: string, releaseBranch: string, devBranch: string) {
+    await this.hardReset();
+
+    await this.git.checkoutLocalBranch(devBranch);
+    await this.git.pull();
+
+    await this.git.checkoutLocalBranch(masterBranch);
+    await this.git.pull();
+
+    await this.git.checkoutBranch(releaseBranch, masterBranch);
+
+    await this.git.mergeFromTo(devBranch, releaseBranch);
   }
 
 }

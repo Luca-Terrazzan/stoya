@@ -32,7 +32,7 @@ async function main() {
   // Execute script
   console.log('\nStarting the creation of release branches 🙋‍♂️');
 
-  const gitmngr = new GitManager('.');
+  const gitmngr = new GitManager('/Users/luca.terrazzan/Documents/workspace/docebo/wand/aamon');
   const status = await gitmngr.getStatus();
 
   const localBranch = await gitmngr.checkoutReleaseBranchLocally('test');
