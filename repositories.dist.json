@@ -1,0 +1,7 @@
+{
+  "repositories": [
+    "path/to/repo1",
+    "path/to/repo2",
+    "...",
+  ]
+}
