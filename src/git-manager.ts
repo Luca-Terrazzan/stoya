@@ -1,5 +1,3 @@
-import 'colors';
-
 import { Bar } from 'cli-progress';
 import simplegit, { SimpleGit } from 'simple-git/promise';
 import { StatusResult } from 'simple-git/typings/response';
