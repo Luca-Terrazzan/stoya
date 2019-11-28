@@ -1,6 +1,7 @@
 import 'colors';
 
 import simplegit, { SimpleGit } from 'simple-git/promise';
+import { StatusResult } from 'simple-git/typings/response';
 
 export class GitManager {
 
@@ -13,16 +14,7 @@ export class GitManager {
     this.repo = '';
   }
 
-  public async init() {
-    if (!this.git.checkIsRepo()) {
-      console.error(`Folder ${this.folder} is not a git repo!`.red);
-      throw new Error(`Folder ${this.folder} is not a git repo!`);
-    }
-
-    this.repo = (await this.git.getRemotes(true))[0].refs.fetch;
-  }
-
-  public async getStatus() {
+  public async getStatus(): Promise<StatusResult> {
     return await this.git.status();
   }
 
@@ -30,7 +22,7 @@ export class GitManager {
     return (await this.git.status()).current;
   }
 
-  public async createRelease(masterBranch: string, releaseBranch: string, devBranch: string) {
+  public async createRelease(masterBranch: string, releaseBranch: string, devBranch: string): Promise<void> {
     await this.hardReset();
 
     await this.git.fetch(undefined, undefined, ['--all']);
@@ -60,7 +52,7 @@ export class GitManager {
     try {
       this.git.reset('hard');
     } catch (e) {
-      console.error(`🐛 Cannot reset repo ${this.repo.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
+      console.error(`🐛 Cannot reset repo ${this.folder.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
       throw e;
     }
   }
@@ -69,7 +61,7 @@ export class GitManager {
     try {
       await this.git.checkoutBranch(releaseBranch, masterBranch);
     } catch (e) {
-      console.error(`⚠  Release branch already existing for repo ${this.repo.bold}, resetting it back to ${masterBranch.bold} ⚠`.yellow);
+      console.error(`⚠  Release branch already existing for repo ${this.folder.bold}, resetting it back to ${masterBranch.bold} ⚠`.yellow);
 
       await this.git.checkout(releaseBranch);
       await this.git.reset(['--hard', `${masterBranch}`]);

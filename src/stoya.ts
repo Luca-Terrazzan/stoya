@@ -37,12 +37,12 @@ async function main() {
     console.log(`🙏  Creating release for repository ${repo.bold}`.green);
 
     const gitMngr = new GitManager(repo);
-    await gitMngr.init();
 
     // Launch all releases in parallel => no async/await here please!
     gitMngr.createRelease(config.branches.master, config.branches.release, config.branches.development)
     .catch((err) => {
-      console.error(`🐛  An error occurred while trying to create a release for repo ${repo.bold}`.red);
+      console.error(`🚨🚨🚨  An error occurred while trying to create a release for repo ${repo.bold} 🚨🚨🚨
+        Please perform a manual check on this repo!`.red);
     });
   }
 
