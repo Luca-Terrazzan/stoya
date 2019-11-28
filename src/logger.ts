@@ -21,7 +21,12 @@ export class Logger {
   }
 
   public static printLogbookToConsole() {
-    // for (repo of )
+    for (const repo of Object.keys(Logger.logStack)) {
+      console.log(`\nLogging repo ${repo.bold}`);
+      for (const message of Logger.logStack[repo]) {
+        console.log(`    ${message}`);
+      }
+    }
   }
 
   private static logStack: {[repo: string]: any[]} = {};

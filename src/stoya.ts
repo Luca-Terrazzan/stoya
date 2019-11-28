@@ -36,11 +36,12 @@ async function main() {
   }
 
   await Promise.all(releases);
+  progressBar.update(config.repositories.length * 4);
   progressBar.stop();
 
   Logger.log(`\n\n🎊 🎊 🎊  Release Process Completed 🎊 🎊 🎊 `.green.bold);
   Logger.log(`\n\n 📖 Here is a complete log of what happenend ordered by folder: \n\n`.bold);
-
+  Logger.printLogbookToConsole();
 }
 
 main();
