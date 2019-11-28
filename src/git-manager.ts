@@ -55,6 +55,8 @@ export class GitManager {
   public async createRelease(masterBranch: string, releaseBranch: string, devBranch: string) {
     await this.hardReset();
 
+    await this.git.fetch(undefined, undefined, ['--all']);
+
     try {
       await this.git.checkout(devBranch);
       await this.git.pull();
