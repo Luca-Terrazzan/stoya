@@ -35,13 +35,13 @@ async function main() {
   console.log('\nStarting the creation of release branches 🙋‍♂️\n'.underline.bold);
 
   for (const repo of repositories) {
-    console.log(`👏  Creating release for repository ${repo}`.green);
+    console.log(`👏  Creating release for repository ${repo.bold}`.green);
 
     const gitMngr = new GitManager(repo);
     await gitMngr.init();
 
     gitMngr.createRelease('maintenance/weekly-70', 'la/reports/release/release-test', 'la/reports/develop').catch((err) => {
-      console.error(`🐛  An error occurred while trying to create a release for repo ${repo}!`.red);
+      console.error(`🐛  An error occurred while trying to create a release for repo ${repo.bold}`.red);
     });
   }
 
