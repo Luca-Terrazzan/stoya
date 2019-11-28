@@ -28,15 +28,11 @@ export class GitManager {
     return (await this.git.status()).current;
   }
 
-  private async checkoutReleaseBranchLocally(branch: string) {
-    return await this.git.checkoutLocalBranch(branch);
-  }
-
   private async hardReset() {
     try{
       this.git.reset('hard');
     } catch (e) {
-      console.error(`🐛 Cannot reset repo ${this.repo.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛`.red);
+      console.error(`🐛 Cannot reset repo ${this.repo.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
       throw e;
     }
   }
