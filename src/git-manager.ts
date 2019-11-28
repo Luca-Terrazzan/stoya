@@ -1,5 +1,6 @@
-import simplegit, { SimpleGit } from "simple-git/promise";
 import 'colors';
+
+import simplegit, { SimpleGit } from 'simple-git/promise';
 
 export class GitManager {
 
@@ -28,8 +29,34 @@ export class GitManager {
     return (await this.git.status()).current;
   }
 
+  public async createRelease(masterBranch: string, releaseBranch: string, devBranch: string) {
+    await this.hardReset();
+
+    await this.git.fetch(undefined, undefined, ['--all']);
+
+    try {
+      await this.git.checkout(devBranch);
+      await this.git.pull();
+    } catch (developBranchError) {
+      console.log(`⚠  Develop branch ${devBranch.bold} does not exist in ${this.folder.bold} ⚠
+        \nAborting release 🤷`.yellow);
+      return;
+    }
+
+    await this.git.checkout(masterBranch);
+    await this.git.pull();
+
+    await this.createReleaseBranch(releaseBranch, masterBranch);
+
+    await this.git.mergeFromTo(devBranch, releaseBranch);
+
+    // await this.git.push();
+
+    console.log(`🎉  Release completed for repo ${this.folder.bold} 🎉`.green);
+  }
+
   private async hardReset() {
-    try{
+    try {
       this.git.reset('hard');
     } catch (e) {
       console.error(`🐛 Cannot reset repo ${this.repo.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
@@ -46,31 +73,6 @@ export class GitManager {
       await this.git.checkout(releaseBranch);
       await this.git.reset(['--hard', `${masterBranch}`]);
     }
-  }
-
-  public async createRelease(masterBranch: string, releaseBranch: string, devBranch: string) {
-    await this.hardReset();
-
-    await this.git.fetch(undefined, undefined, ['--all']);
-
-    try {
-      await this.git.checkout(devBranch);
-      await this.git.pull();
-    } catch(developBranchError) {
-      console.log(`⚠  Develop branch ${devBranch.bold} does not exist in ${this.folder.bold} ⚠\nAborting release 🤷`.yellow);
-      return;
-    }
-
-    await this.git.checkout(masterBranch);
-    await this.git.pull();
-
-    await this.createReleaseBranch(releaseBranch, masterBranch);
-
-    await this.git.mergeFromTo(devBranch, releaseBranch);
-
-    // await this.git.push();
-
-    console.log(`🎉  Release completed for repo ${this.folder.bold} 🎉`.green);
   }
 
 }

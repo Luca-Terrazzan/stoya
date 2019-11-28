@@ -1,13 +1,12 @@
-#!/usr/bin/env node
+import 'colors';
 
+import * as config from '../config.json';
 import { description, name, version } from '../package.json';
 import { GitManager } from './git-manager';
-import * as config from "../config.json";
-import "colors";
 
 async function main() {
 
-  const options = process.argv.slice(2)
+  const options = process.argv.slice(2);
 
   if (options.includes('--version')) {
     console.log(`${name} version ${version}`);
