@@ -32,10 +32,10 @@ async function main() {
   }
 
   // Execute script
-  console.log('\nStarting the creation of release branches 🙋‍♂️\n'.underline.bold);
+  console.log('\n ̦💣  Starting the creation of release branches 💣\n'.underline.bold);
 
   for (const repo of repositories) {
-    console.log(`👏  Creating release for repository ${repo.bold}`.green);
+    console.log(`🙏  Creating release for repository ${repo.bold}`.green);
 
     const gitMngr = new GitManager(repo);
     await gitMngr.init();
