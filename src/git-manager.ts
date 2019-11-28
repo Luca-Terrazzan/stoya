@@ -2,6 +2,7 @@ import 'colors';
 
 import simplegit, { SimpleGit } from 'simple-git/promise';
 import { StatusResult } from 'simple-git/typings/response';
+import { error, log } from './logger';
 
 export class GitManager {
 
@@ -29,7 +30,7 @@ export class GitManager {
       await this.git.checkout(devBranch);
       await this.git.pull();
     } catch (developBranchError) {
-      console.log(`⚠  Develop branch ${devBranch.bold} does not exist in ${this.folder.bold} ⚠
+      log(`⚠  Develop branch ${devBranch.bold} does not exist in ${this.folder.bold} ⚠
         Aborting release 🤷`.yellow);
       return;
     }
@@ -43,14 +44,14 @@ export class GitManager {
 
     // await this.git.push();
 
-    console.log(`🎉  Release completed for repo ${this.folder.bold} 🎉`.green);
+    log(`🎉  Release completed for repo ${this.folder.bold} 🎉`.green);
   }
 
   private async hardReset() {
     try {
       this.git.reset('hard');
     } catch (e) {
-      console.error(`🐛 Cannot reset repo ${this.folder.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
+      error(`🐛 Cannot reset repo ${this.folder.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
       throw e;
     }
   }
@@ -59,7 +60,7 @@ export class GitManager {
     try {
       await this.git.checkoutBranch(releaseBranch, masterBranch);
     } catch (e) {
-      console.error(`⚠  Release branch already existing for repo ${this.folder.bold}, resetting it back to ${masterBranch.bold} ⚠`.yellow);
+      error(`⚠  Release branch already existing for repo ${this.folder.bold}, resetting it back to ${masterBranch.bold} ⚠`.yellow);
 
       await this.git.checkout(releaseBranch);
       await this.git.reset(['--hard', `${masterBranch}`]);
