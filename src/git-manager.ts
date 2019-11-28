@@ -9,6 +9,7 @@ export class GitManager {
 
   constructor(private readonly folder: string) {
     this.git = simplegit(folder);
+    this.git.silent(true);
     this.repo = '';
   }
 
@@ -39,7 +40,7 @@ export class GitManager {
       await this.git.pull();
     } catch (developBranchError) {
       console.log(`⚠  Develop branch ${devBranch.bold} does not exist in ${this.folder.bold} ⚠
-        \nAborting release 🤷`.yellow);
+        Aborting release 🤷`.yellow);
       return;
     }
 

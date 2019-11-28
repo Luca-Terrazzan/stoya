@@ -31,7 +31,7 @@ async function main() {
   }
 
   // Execute script
-  console.log('\n ̦💣  Starting the creation of release branches 💣\n'.underline.bold);
+  console.log('\n 💣  Starting the creation of release branches 💣\n'.underline.bold);
 
   for (const repo of config.repositories) {
     console.log(`🙏  Creating release for repository ${repo.bold}`.green);
