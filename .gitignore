@@ -1,4 +1,8 @@
-node_modules
-.history
+# Ignore tsc build
 build
-repositories.json
+
+# npm
+node_modules
+
+# Ignore local config
+config.json

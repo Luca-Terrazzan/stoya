@@ -1,0 +1,12 @@
+{
+  "branches": {
+    "development": "develop",
+    "master": "master",
+    "release": "release1"
+  },
+  "repositories": [
+    "path/to/repo1",
+    "path/to/repo2",
+    "..."
+  ]
+}
