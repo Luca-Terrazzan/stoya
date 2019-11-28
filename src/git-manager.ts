@@ -6,12 +6,10 @@ import { StatusResult } from 'simple-git/typings/response';
 export class GitManager {
 
   private readonly git: SimpleGit;
-  private repo: string;
 
   constructor(private readonly folder: string) {
     this.git = simplegit(folder);
     this.git.silent(true);
-    this.repo = '';
   }
 
   public async getStatus(): Promise<StatusResult> {

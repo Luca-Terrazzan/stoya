@@ -3,7 +3,6 @@ import 'colors';
 import * as config from '../config.json';
 import { description, name, version } from '../package.json';
 import { GitManager } from './git-manager';
-import { release } from 'os';
 
 async function main() {
 
@@ -42,11 +41,11 @@ async function main() {
     const gitMngr = new GitManager(repo);
 
     // Launch all releases in parallel => no async/await here please!
-
     releases.push(gitMngr.createRelease(config.branches.master, config.branches.release, config.branches.development)
-      .catch((err) => {
+      .catch((/* err */) => {
         console.error(`🚨 🚨 🚨  An error occurred while trying to create a release for repo ${repo.bold} 🚨 🚨 🚨
           Please perform a manual check on this repo!`.red);
+        // TODO: print out err in debug mode
       }),
     );
   }
