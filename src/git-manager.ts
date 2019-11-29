@@ -63,10 +63,9 @@ export class GitManager {
     try {
       await this.git.checkoutBranch(releaseBranch, masterBranch);
     } catch (e) {
-      Logger.logRepositoryMessage(this.folder, `⚠  Release branch already existing for repo ${this.folder.bold}, resetting it back to ${masterBranch.bold} ⚠`.yellow);
+      Logger.logRepositoryMessage(this.folder, `⚠  Release branch already existing for repo ${this.folder.bold}, using the existing one ⚠`.yellow);
 
       await this.git.checkout(releaseBranch);
-      await this.git.reset(['--hard', `${masterBranch}`]);
     }
   }
 
