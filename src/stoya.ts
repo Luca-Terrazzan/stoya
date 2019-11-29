@@ -28,7 +28,8 @@ async function main() {
     })
     .catch((/* err */) => {
       progressBar.increment(1);
-      Logger.logRepositoryMessage(repo, `🚨 🚨 🚨  An error occurred while trying to create a release for repo ${repo.bold} 🚨 🚨 🚨
+      Logger.logRepositoryMessage(repo, `🚨 🚨 🚨  An error occurred while trying to create a `
+        + `release for repo ${repo.bold} 🚨 🚨 🚨
       Please perform a manual check on this repo!`.red);
       // TODO: print out err in debug mode
     }),
