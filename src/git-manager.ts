@@ -1,13 +1,13 @@
-import 'colors';
-
+import { Bar } from 'cli-progress';
 import simplegit, { SimpleGit } from 'simple-git/promise';
 import { StatusResult } from 'simple-git/typings/response';
+import { Logger } from './logger';
 
 export class GitManager {
 
   private readonly git: SimpleGit;
 
-  constructor(private readonly folder: string) {
+  constructor(private readonly folder: string, private readonly progressBar: Bar) {
     this.git = simplegit(folder);
     this.git.silent(true);
   }
@@ -29,7 +29,7 @@ export class GitManager {
       await this.git.checkout(devBranch);
       await this.git.pull();
     } catch (developBranchError) {
-      console.log(`⚠  Develop branch ${devBranch.bold} does not exist in ${this.folder.bold} ⚠
+      Logger.logRepositoryMessage(this.folder, `⚠  Develop branch ${devBranch.bold} does not exist in ${this.folder.bold} ⚠
         Aborting release 🤷`.yellow);
       return;
     }
@@ -39,18 +39,22 @@ export class GitManager {
 
     await this.createReleaseBranch(releaseBranch, masterBranch);
 
+    this.progressBar.increment(1);
+
     await this.git.mergeFromTo(devBranch, releaseBranch);
 
+    this.progressBar.increment(1);
     // await this.git.push();
+    this.progressBar.increment(1);
 
-    console.log(`🎉  Release completed for repo ${this.folder.bold} 🎉`.green);
+    Logger.logRepositoryMessage(this.folder, `🎉  Release completed for repo ${this.folder.bold} 🎉`.green);
   }
 
   private async hardReset() {
     try {
       this.git.reset('hard');
     } catch (e) {
-      console.error(`🐛 Cannot reset repo ${this.folder.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
+      Logger.logRepositoryMessage(this.folder, `🐛 Cannot reset repo ${this.folder.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
       throw e;
     }
   }
@@ -59,10 +63,9 @@ export class GitManager {
     try {
       await this.git.checkoutBranch(releaseBranch, masterBranch);
     } catch (e) {
-      console.error(`⚠  Release branch already existing for repo ${this.folder.bold}, resetting it back to ${masterBranch.bold} ⚠`.yellow);
+      Logger.logRepositoryMessage(this.folder, `⚠  Release branch already existing for repo ${this.folder.bold}, using the existing one ⚠`.yellow);
 
       await this.git.checkout(releaseBranch);
-      await this.git.reset(['--hard', `${masterBranch}`]);
     }
   }
 
