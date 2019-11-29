@@ -29,7 +29,8 @@ export class GitManager {
       await this.git.checkout(devBranch);
       await this.git.pull();
     } catch (developBranchError) {
-      Logger.logRepositoryMessage(this.folder, `⚠  Develop branch ${devBranch.bold} does not exist in ${this.folder.bold} ⚠
+      Logger.logRepositoryMessage(this.folder, `⚠  Develop branch ${devBranch.bold} does not exist \
+        in ${this.folder.bold} ⚠
         Aborting release 🤷`.yellow);
       return;
     }
@@ -54,16 +55,24 @@ export class GitManager {
     try {
       this.git.reset('hard');
     } catch (e) {
-      Logger.logRepositoryMessage(this.folder, `🐛 Cannot reset repo ${this.folder.bold} to current branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
+      Logger.logRepositoryMessage(this.folder, `🐛 Cannot reset repo ${this.folder.bold} to current \
+        branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
       throw e;
     }
   }
 
-  private async createReleaseBranch(releaseBranch: string, masterBranch: string) {
+  /**
+   * Creates a release branch. If the remote for this branch exists already an error is thrown.
+   *
+   * @throws Error Throws an error if
+   */
+  private async createReleaseBranch(releaseBranch: string, masterBranch: string): Promise<void> {
+    // Verify that the release branch does not exist already
     try {
       await this.git.checkoutBranch(releaseBranch, masterBranch);
     } catch (e) {
-      Logger.logRepositoryMessage(this.folder, `⚠  Release branch already existing for repo ${this.folder.bold}, using the existing one ⚠`.yellow);
+      Logger.logRepositoryMessage(this.folder, `⚠  Release branch already existing for \
+        repo ${this.folder.bold}, using the existing one ⚠`.yellow);
 
       await this.git.checkout(releaseBranch);
     }
