@@ -21,6 +21,7 @@ export class GitManager {
   }
 
   public async createRelease(masterBranch: string, releaseBranch: string, devBranch: string): Promise<void> {
+    await this.git.stash();
     await this.hardReset();
 
     await this.git.fetch(undefined, undefined, ['--all']);
