@@ -1,23 +1,16 @@
 import { Bar } from 'cli-progress';
-import simplegit, { SimpleGit } from 'simple-git/promise';
+import simplegit from 'simple-git/promise';
 import { StatusResult } from 'simple-git/typings/response';
+import { GitResetException } from './errors/git-reset.exception';
 import { Logger } from './logger';
 
 export class GitManager {
 
-  private readonly git: SimpleGit;
+  private readonly git: simplegit.SimpleGit;
 
   constructor(private readonly folder: string, private readonly progressBar: Bar) {
     this.git = simplegit(folder);
     this.git.silent(true);
-  }
-
-  public async getStatus(): Promise<StatusResult> {
-    return await this.git.status();
-  }
-
-  public async getCurrentBranch(): Promise<string> {
-    return (await this.git.status()).current;
   }
 
   public async createRelease(masterBranch: string, releaseBranch: string, devBranch: string): Promise<void> {
@@ -52,13 +45,21 @@ export class GitManager {
     Logger.logRepositoryMessage(this.folder, `🎉  Release completed for repo ${this.folder.bold} 🎉`.green);
   }
 
+  public async getStatus(): Promise<StatusResult> {
+    return await this.git.status();
+  }
+
+  public async getCurrentBranch(): Promise<string> {
+    return (await this.git.status()).current;
+  }
+
   private async hardReset() {
     try {
       this.git.reset('hard');
     } catch (e) {
       Logger.logRepositoryMessage(this.folder, `🐛 Cannot reset repo ${this.folder.bold} to current`
         + `branch ${(await this.getCurrentBranch()).bold} 🐛\nPlease perform a manual check here!`.red);
-      throw e;
+      throw new GitResetException(e);
     }
   }
 
