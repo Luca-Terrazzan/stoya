@@ -5,9 +5,9 @@ import * as config from '../config.json';
 import { Exception } from './errors/exception.js';
 import { GitManager } from './git-manager';
 import { Logger } from './logger';
+
 async function main() {
 
-  // Execute script
   Logger.log('\n 💣  Starting the creation of release branches 💣\n'.underline.bold);
 
   const releases: Array<Promise<void>> = [];
@@ -44,6 +44,7 @@ async function main() {
   Logger.log(`\n\n🎊 🎊 🎊  Release Process Completed 🎊 🎊 🎊 `.green.bold);
   Logger.log(`\n\n 📖 Here is a complete log of what happenend ordered by folder: \n\n`.bold);
   Logger.printLogbookToConsole();
+
 }
 
 main();
