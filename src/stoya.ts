@@ -2,9 +2,9 @@ import 'colors';
 
 import { Bar } from "cli-progress";
 import * as config from '../config.json';
+import { Exception } from './errors/exception.js';
 import { GitManager } from './git-manager';
 import { Logger } from './logger';
-
 async function main() {
 
   // Execute script
@@ -26,12 +26,13 @@ async function main() {
     .then(() => {
       progressBar.increment(1);
     })
-    .catch((/* err */) => {
+    .catch((err: Exception) => {
       progressBar.increment(1);
       Logger.logRepositoryMessage(repo, `🚨 🚨 🚨  An error occurred while trying to create a `
-        + `release for repo ${repo.bold} 🚨 🚨 🚨
+      + `release for repo ${repo.bold} 🚨 🚨 🚨
       Please perform a manual check on this repo!`.red);
-      // TODO: print out err in debug mode
+      Logger.logRepositoryMessage(repo, `Error was: `.red);
+      Logger.logRepositoryMessage(repo, err);
     }),
     );
   }
