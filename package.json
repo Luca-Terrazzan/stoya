@@ -5,8 +5,9 @@
   "main": "./build/src/stoya.js",
   "bin": "./build/src/stoya.js",
   "scripts": {
+    "build": "tsc && tslint --project .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "start": "ts-node src/stoya.ts"
   },
   "author": "",
   "license": "ISC",
@@ -17,9 +18,10 @@
     "colors": "^1.4.0",
     "commander": "^4.0.1",
     "simple-git": "^1.126.0",
-    "typescript": "^3.7.2"
+    "typescript": "3.x"
   },
   "devDependencies": {
-    "@types/node": "^12.12.7"
+    "@types/node": "^12.12.7",
+    "tslint": "^5.20.1"
   }
 }
