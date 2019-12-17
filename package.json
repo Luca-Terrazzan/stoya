@@ -2,14 +2,15 @@
   "name": "stoya",
   "version": "1.0.0",
   "description": "Creates release branches",
+  "author": "Luca Terrazzan <luca.terraz@gmail.com>",
   "main": "./build/src/stoya.js",
   "bin": "./build/src/stoya.js",
   "scripts": {
-    "build": "tsc && tslint --project .",
+    "build": "tsc",
+    "lint": "tslint --project .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/stoya.ts"
   },
-  "author": "",
   "license": "ISC",
   "man": "./man/doc.1",
   "dependencies": {

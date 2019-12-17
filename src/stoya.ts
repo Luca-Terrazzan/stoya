@@ -1,6 +1,6 @@
 import 'colors';
 
-import { Bar } from "cli-progress";
+import { Bar } from 'cli-progress';
 import * as config from '../config.json';
 import { Exception } from './errors/exception.js';
 import { GitManager } from './git-manager';
