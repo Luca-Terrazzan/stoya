@@ -9,8 +9,7 @@
       "script": "build",
       "problemMatcher": [
         "$tsc"
-      ],
-      "group": "build"
+      ]
     },
     {
       "label": "Lint",
@@ -26,6 +25,12 @@
         "Compile",
         "Lint"
       ],
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "type": "npm",
+      "script": "start",
       "problemMatcher": []
     }
   ]
